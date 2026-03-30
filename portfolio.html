@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Portfolio</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0d0d14;--surface:#13131f;--surface2:#1a1a2e;
+    --accent:#7c5cbf;--accent2:#a07fe0;--text:#e8e8f0;--muted:#888;
+    --border:rgba(124,92,191,0.25);
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6}
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,13,20,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav-logo{font-weight:700;font-size:1.1rem;color:var(--accent2);letter-spacing:1px}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;letter-spacing:.5px;transition:color .2s}
+  .nav-links a:hover{color:var(--accent2)}
+  #hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.4}
+  .hero-glow{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(124,92,191,.18) 0%,transparent 70%);pointer-events:none}
+  .hero-content{position:relative;z-index:1}
+  .hero-tag{display:inline-block;background:rgba(124,92,191,.15);border:1px solid var(--border);color:var(--accent2);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;padding:.4rem 1rem;border-radius:2rem;margin-bottom:1.5rem}
+  h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
+  h1 span{color:var(--accent2)}
+  .hero-sub{font-size:1.1rem;color:var(--muted);max-width:520px;margin:0 auto 2.5rem}
+  .btn{display:inline-block;padding:.75rem 2rem;border-radius:.3rem;text-decoration:none;font-size:.95rem;font-weight:600;letter-spacing:.5px;transition:all .2s;cursor:pointer;border:none}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent2);transform:translateY(-2px)}
+  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);margin-left:1rem}
+  .btn-outline:hover{border-color:var(--accent2);color:var(--accent2)}
+  section{padding:5rem 2rem}
+  .container{max-width:1000px;margin:0 auto}
+  .section-tag{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+  .section-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+  .section-divider{width:50px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:2.5rem}
+  #about{background:var(--surface)}
+  .about-grid{display:grid;grid-template-columns:1fr 1.8fr;gap:3rem;align-items:center}
+  .avatar{width:200px;height:200px;border-radius:.5rem;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--accent2);margin:0 auto}
+  .about-text p{color:var(--muted);margin-bottom:1rem;font-size:1rem}
+  .role-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+  .role-tag{font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(124,92,191,.12);border:1px solid var(--border);border-radius:2rem;padding:.3rem .9rem}
+  #projects{background:var(--bg)}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem}
+  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:.5rem;overflow:hidden;transition:transform .2s,border-color .2s}
+  .project-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .project-thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+  .project-thumb .thumb-bg{position:absolute;inset:0}
+  .project-thumb span{position:relative;z-index:1}
+  .project-body{padding:1.25rem}
+  .project-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+  .ptag{display:inline-block;font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(124,92,191,.1);border-radius:2rem;padding:.2rem .65rem}
+  .ptag.green{color:#5dcaa5;background:rgba(29,158,117,.1)}
+  .ptag.orange{color:#ef9f27;background:rgba(186,117,23,.1)}
+  .project-body h3{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+  .project-body p{color:var(--muted);font-size:.9rem;margin-bottom:.9rem}
+  .project-role{font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.75rem;margin-top:.25rem}
+  .project-role strong{color:var(--accent2)}
+  #skills{background:var(--surface)}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
+  .skill-card{background:var(--surface2);border:1px solid var(--border);border-radius:.5rem;padding:1.5rem}
+  .skill-card h4{font-size:.9rem;font-weight:600;margin-bottom:1rem;color:var(--accent2)}
+  .skill-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+  .skill-label{font-size:.85rem;color:var(--text)}
+  .skill-bar-wrap{width:90px;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+  .skill-bar{height:100%;background:var(--accent);border-radius:3px}
+  #contact{background:var(--bg)}
+  .contact-box{background:var(--surface);border:1px solid var(--border);border-radius:.75rem;padding:3rem;text-align:center;max-width:600px;margin:0 auto}
+  .contact-box p{color:var(--muted);margin-bottom:2rem}
+  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
+  .contact-link{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.4rem;border:1px solid var(--border);border-radius:.3rem;color:var(--text);text-decoration:none;font-size:.9rem;transition:all .2s}
+  .contact-link:hover{border-color:var(--accent2);color:var(--accent2)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+  input,textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:.3rem;padding:.75rem 1rem;color:var(--text);font-size:.95rem;outline:none;transition:border-color .2s;font-family:inherit}
+  input:focus,textarea:focus{border-color:var(--accent2)}
+  textarea{resize:vertical;min-height:120px;margin-bottom:1rem}
+  footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+  @media(max-width:640px){
+    .about-grid{grid-template-columns:1fr}
+    .form-row{grid-template-columns:1fr}
+    .nav-links{gap:1rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">&#9670; Kaiming Li</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Game Design Student</div>
+    <h1>I make <span>games</span> —<br>all kinds of them</h1>
+    <p class="hero-sub">3D puzzles, card games, game jams. I'm a CS & Game Dev student at Northeastern who just likes building things people can play.</p>
+    <a href="#projects" class="btn btn-primary">See My Projects</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="avatar">&#127918;</div>
+      </div>
+      <div class="about-text">
+        <p class="section-tag">About Me</p>
+        <h2 class="section-title">Hi, I'm <span style="color:var(--accent2)">Kaiming Li</span></h2>
+        <div class="section-divider"></div>
+        <p>I'm a CS and Game Development student at Northeastern (Class of 2029). I've made puzzle games, card games, and jam games — sometimes as the programmer, sometimes as the designer, sometimes both.</p>
+        <p>I like figuring out why things are fun and then trying to build that. Outside of class I'm in the IGDA chapter here and have done a couple Ludum Dare jams.</p>
+        <div class="role-tags">
+          <span class="role-tag">Game Designer</span>
+          <span class="role-tag">Programmer</span>
+          <span class="role-tag">Level Designer</span>
+          <span class="role-tag">Asset Creator</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-tag">My Work</p>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="section-divider"></div>
+    <div class="projects-grid">
+
+      <!-- Sacrifice is Necessary -->
+      <div class="project-card">
+        <div class="project-thumb">
+          <div class="thumb-bg" style="background:linear-gradient(135deg,#1a1a2e,#7c5cbf55)"></div>
+          <span>&#129302;</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag">3D Puzzle</span>
+            <span class="ptag green">Unity</span>
+            <span class="ptag orange">Co-op</span>
+          </div>
+          <h3>Sacrifice is Necessary</h3>
+          <p>Control two robots to push boxes and solve puzzles in a Sokoban-inspired 3D world. Inspired by Shadow Tactics and Altered Carbon — players must coordinate unique robot abilities across multiple levels.</p>
+          <div class="project-role"><strong>Role:</strong> Game Designer &amp; Programmer</div>
+        </div>
+      </div>
+
+      <!-- Iron Curtain -->
+      <div class="project-card">
+        <div class="project-thumb">
+          <div class="thumb-bg" style="background:linear-gradient(135deg,#2a1a0a,#bf8c2255)"></div>
+          <span>&#127183;</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag">Card Game</span>
+            <span class="ptag orange">Tabletop</span>
+            <span class="ptag">Cold War</span>
+          </div>
+          <h3>Iron Curtain</h3>
+          <p>A competitive two-player card game set during the Cold War. Players manage weapon and economy cards, outwitting opponents across a tense strategic board. Features hand-illustrated cards and custom game components.</p>
+          <div class="project-role"><strong>Role:</strong> Game Designer &amp; System Designer</div>
+        </div>
+      </div>
+
+      <!-- Silent Echoes -->
+      <div class="project-card">
+        <div class="project-thumb">
+          <div class="thumb-bg" style="background:linear-gradient(135deg,#0d1a0d,#2d8c2d44)"></div>
+          <span>&#128065;</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag">Stealth Puzzle</span>
+            <span class="ptag green">Game Jam</span>
+            <span class="ptag">Ludum Dare 54</span>
+          </div>
+          <h3>Silent Echoes</h3>
+          <p>A top-down stealth puzzle game where players navigate a limited space as a blind protagonist, relying on restricted abilities to survive. Built for the Ludum Dare 54 global game jam with the theme "Limited Space."</p>
+          <div class="project-role"><strong>Role:</strong> Game Designer &amp; Asset Creator</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-tag">Expertise</p>
+    <h2 class="section-title">Skills & Tools</h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>&#9881; Game Design</h4>
+        <div class="skill-item"><span class="skill-label">Level Design</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Mechanics Design</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">System Design</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Prototyping</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
+      </div>
+      <div class="skill-card">
+        <h4>&#128187; Tools</h4>
+        <div class="skill-item"><span class="skill-label">Unity</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">3ds Max</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">C#</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Figma</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+      </div>
+      <div class="skill-card">
+        <h4>&#127918; Game Formats</h4>
+        <div class="skill-item"><span class="skill-label">Digital Games</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Tabletop / Card</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Puzzle Design</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Game Jams</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-tag">Get In Touch</p>
+    <h2 class="section-title">Contact Me</h2>
+    <div class="section-divider"></div>
+    <div class="contact-box">
+      <p>Interested in collaborating, playtesting, or just talking game design? I'd love to hear from you.</p>
+      <div class="form-row">
+        <input type="text" placeholder="Your Name"/>
+        <input type="email" placeholder="Your Email"/>
+      </div>
+      <input type="text" placeholder="Subject" style="margin-bottom:1rem"/>
+      <textarea placeholder="Your message..."></textarea>
+      <button class="btn btn-primary" style="width:100%;font-size:1rem">Send Message</button>
+      <div class="contact-links">
+        <a href="#" class="contact-link">&#128100; LinkedIn</a>
+        <a href="#" class="contact-link">&#128025; itch.io</a>
+        <a href="#" class="contact-link">&#128202; GitHub</a>
+        <a href="mailto:li.kaim@northeastern.edu" class="contact-link">&#128140; li.kaim@northeastern.edu</a>
+        <a href="https://ldjam.com/events/ludum-dare/56/lumibot" class="contact-link">&#127918; itch.io / LD56</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built by <span style="color:var(--accent2)">Kaiming Li</span> &nbsp;&#9670;&nbsp; CS & Game Development @ Northeastern University</p>
+</footer>
+
+</body>
+</html>
