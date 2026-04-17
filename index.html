@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Portfolio</title>
+<title>Kaiming Li — Game Design Portfolio</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
@@ -36,16 +36,19 @@
   .section-tag{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
   .section-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
   .section-divider{width:50px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:2.5rem}
+  /* ABOUT */
   #about{background:var(--surface)}
   .about-grid{display:grid;grid-template-columns:1fr 1.8fr;gap:3rem;align-items:center}
   .avatar{width:200px;height:200px;border-radius:.5rem;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--accent2);margin:0 auto}
   .about-text p{color:var(--muted);margin-bottom:1rem;font-size:1rem}
   .role-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
   .role-tag{font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(124,92,191,.12);border:1px solid var(--border);border-radius:2rem;padding:.3rem .9rem}
+  /* PROJECTS */
   #projects{background:var(--bg)}
   .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem}
-  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:.5rem;overflow:hidden;transition:transform .2s,border-color .2s}
+  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:.5rem;overflow:hidden;transition:transform .2s,border-color .2s;cursor:pointer}
   .project-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .project-card.open{border-color:var(--accent);transform:none}
   .project-thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
   .project-thumb .thumb-bg{position:absolute;inset:0}
   .project-thumb span{position:relative;z-index:1}
@@ -56,8 +59,22 @@
   .ptag.orange{color:#ef9f27;background:rgba(186,117,23,.1)}
   .project-body h3{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
   .project-body p{color:var(--muted);font-size:.9rem;margin-bottom:.9rem}
-  .project-role{font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.75rem;margin-top:.25rem}
+  .project-role{font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.75rem}
   .project-role strong{color:var(--accent2)}
+  .expand-hint{font-size:.75rem;color:var(--accent2);margin-top:.6rem;opacity:.7}
+  /* EXPANDED DETAIL */
+  .project-detail{display:none;border-top:1px solid var(--border);padding:1.25rem;background:var(--surface2)}
+  .project-card.open .project-detail{display:block}
+  .detail-section{margin-bottom:1.25rem}
+  .detail-section h4{font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+  .detail-section p{font-size:.88rem;color:var(--muted);line-height:1.7}
+  .detail-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+  .chip{font-size:.75rem;padding:.25rem .7rem;border-radius:2rem;background:rgba(124,92,191,.1);border:1px solid var(--border);color:var(--text)}
+  .close-btn{display:inline-block;margin-top:.75rem;font-size:.8rem;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:.3rem;padding:.3rem .8rem;transition:all .2s}
+  .close-btn:hover{color:var(--accent2);border-color:var(--accent2)}
+  .view-btn{display:inline-block;margin-top:.75rem;margin-right:.5rem;font-size:.8rem;color:var(--accent2);text-decoration:none;border:1px solid var(--accent);border-radius:.3rem;padding:.3rem .8rem;transition:all .2s}
+  .view-btn:hover{background:var(--accent);color:#fff}
+  /* SKILLS */
   #skills{background:var(--surface)}
   .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
   .skill-card{background:var(--surface2);border:1px solid var(--border);border-radius:.5rem;padding:1.5rem}
@@ -66,6 +83,7 @@
   .skill-label{font-size:.85rem;color:var(--text)}
   .skill-bar-wrap{width:90px;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
   .skill-bar{height:100%;background:var(--accent);border-radius:3px}
+  /* CONTACT */
   #contact{background:var(--bg)}
   .contact-box{background:var(--surface);border:1px solid var(--border);border-radius:.75rem;padding:3rem;text-align:center;max-width:600px;margin:0 auto}
   .contact-box p{color:var(--muted);margin-bottom:2rem}
@@ -96,7 +114,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
@@ -109,13 +126,10 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
-      <div>
-        <div class="avatar">&#127918;</div>
-      </div>
+      <div><div class="avatar">&#127918;</div></div>
       <div class="about-text">
         <p class="section-tag">About Me</p>
         <h2 class="section-title">Hi, I'm <span style="color:var(--accent2)">Kaiming Li</span></h2>
@@ -133,7 +147,6 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="container">
     <p class="section-tag">My Work</p>
@@ -142,7 +155,7 @@
     <div class="projects-grid">
 
       <!-- Sacrifice is Necessary -->
-      <div class="project-card">
+      <div class="project-card" onclick="toggleCard(this)">
         <div class="project-thumb">
           <div class="thumb-bg" style="background:linear-gradient(135deg,#1a1a2e,#7c5cbf55)"></div>
           <span>&#129302;</span>
@@ -154,13 +167,18 @@
             <span class="ptag orange">Co-op</span>
           </div>
           <h3>Sacrifice is Necessary</h3>
-          <p>Control two robots to push boxes and solve puzzles in a Sokoban-inspired 3D world. Inspired by Shadow Tactics and Altered Carbon — players must coordinate unique robot abilities across multiple levels.</p>
+          <p>Control two robots to push boxes and solve puzzles in a Sokoban-inspired 3D world.</p>
           <div class="project-role"><strong>Role:</strong> Game Designer &amp; Programmer</div>
+          <div class="expand-hint">Click to see more ↓</div>
+        </div>
+        <div class="project-detail">
+          <a href="sacrifice/sacrifice.html" class="view-btn" onclick="event.stopPropagation()">View Full Project →</a>
+          <div class="close-btn" onmousedown="toggleCard(this.closest('.project-card'))">Close ↑</div>
         </div>
       </div>
 
       <!-- Iron Curtain -->
-      <div class="project-card">
+      <div class="project-card" onclick="toggleCard(this)">
         <div class="project-thumb">
           <div class="thumb-bg" style="background:linear-gradient(135deg,#2a1a0a,#bf8c2255)"></div>
           <span>&#127183;</span>
@@ -172,13 +190,38 @@
             <span class="ptag">Cold War</span>
           </div>
           <h3>Iron Curtain</h3>
-          <p>A competitive two-player card game set during the Cold War. Players manage weapon and economy cards, outwitting opponents across a tense strategic board. Features hand-illustrated cards and custom game components.</p>
+          <p>A competitive two-player card game set during the Cold War era.</p>
           <div class="project-role"><strong>Role:</strong> Game Designer &amp; System Designer</div>
+          <div class="expand-hint">Click to see more ↓</div>
+        </div>
+        <div class="project-detail">
+          <div class="detail-section">
+            <h4>About the Game</h4>
+            <p>A two-player competitive card game inspired by the Cold War conflict between two nations. Each round, players choose weapon and economy cards to outplay their opponent. The game rewards both strategic planning and reading your opponent's hand.</p>
+          </div>
+          <div class="detail-section">
+            <h4>Core Mechanic</h4>
+            <p>Players manage two types of cards — green economy cards and red weapon cards, each with three power levels. Cards are placed simultaneously each round, so you have to predict what the other player will do. Blank "permanent" cards add a bluffing layer to every turn.</p>
+          </div>
+          <div class="detail-section">
+            <h4>What I Did</h4>
+            <p>Designed the full card system, game board, and round structure. Created all card illustrations and the box art. Playtested extensively to balance the weapon and economy cards. Inspired by Sheriff of Nottingham's hidden information mechanics.</p>
+          </div>
+          <div class="detail-section">
+            <h4>Tools Used</h4>
+            <div class="detail-chips">
+              <span class="chip">Tabletop Design</span>
+              <span class="chip">Card Illustration</span>
+              <span class="chip">Playtesting</span>
+              <span class="chip">System Design</span>
+            </div>
+          </div>
+          <div class="close-btn" onmousedown="toggleCard(this.closest('.project-card'))">Close ↑</div>
         </div>
       </div>
 
       <!-- Silent Echoes -->
-      <div class="project-card">
+      <div class="project-card" onclick="toggleCard(this)">
         <div class="project-thumb">
           <div class="thumb-bg" style="background:linear-gradient(135deg,#0d1a0d,#2d8c2d44)"></div>
           <span>&#128065;</span>
@@ -190,8 +233,33 @@
             <span class="ptag">Ludum Dare 54</span>
           </div>
           <h3>Silent Echoes</h3>
-          <p>A top-down stealth puzzle game where players navigate a limited space as a blind protagonist, relying on restricted abilities to survive. Built for the Ludum Dare 54 global game jam with the theme "Limited Space."</p>
+          <p>A top-down stealth puzzle game built for Ludum Dare 54 — "Limited Space."</p>
           <div class="project-role"><strong>Role:</strong> Game Designer &amp; Asset Creator</div>
+          <div class="expand-hint">Click to see more ↓</div>
+        </div>
+        <div class="project-detail">
+          <div class="detail-section">
+            <h4>About the Game</h4>
+            <p>A top-down stealth puzzle game where you play as a blind protagonist navigating a limited space. You rely on restricted senses and limited abilities to survive and find your way through each level. Built in 72 hours for the global Ludum Dare 54 game jam.</p>
+          </div>
+          <div class="detail-section">
+            <h4>Core Mechanic</h4>
+            <p>The player can't see the full map — vision is intentionally limited to sell the "blind protagonist" concept. Movement and interaction are carefully constrained to match the jam theme of "Limited Space." Every decision feels tense because of what you can't see.</p>
+          </div>
+          <div class="detail-section">
+            <h4>What I Did</h4>
+            <p>Designed the game concept and levels. Created and animated all character and environment assets. This was my first game jam — proud we finished a complete, playable game within the 72-hour window.</p>
+          </div>
+          <div class="detail-section">
+            <h4>Tools Used</h4>
+            <div class="detail-chips">
+              <span class="chip">Unity</span>
+              <span class="chip">Asset Creation</span>
+              <span class="chip">Level Design</span>
+              <span class="chip">Game Jam</span>
+            </div>
+          </div>
+          <div class="close-btn" onmousedown="toggleCard(this.closest('.project-card'))">Close ↑</div>
         </div>
       </div>
 
@@ -199,7 +267,6 @@
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="container">
     <p class="section-tag">Expertise</p>
@@ -218,7 +285,7 @@
         <div class="skill-item"><span class="skill-label">Unity</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
         <div class="skill-item"><span class="skill-label">3ds Max</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
         <div class="skill-item"><span class="skill-label">C#</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></div>
-        <div class="skill-item"><span class="skill-label">Figma</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+        <div class="skill-item"><span class="skill-label">Blender</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
       </div>
       <div class="skill-card">
         <h4>&#127918; Game Formats</h4>
@@ -231,7 +298,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="container">
     <p class="section-tag">Get In Touch</p>
@@ -248,10 +314,9 @@
       <button class="btn btn-primary" style="width:100%;font-size:1rem">Send Message</button>
       <div class="contact-links">
         <a href="#" class="contact-link">&#128100; LinkedIn</a>
-        <a href="#" class="contact-link">&#128025; itch.io</a>
+        <a href="https://ldjam.com/events/ludum-dare/56/lumibot" class="contact-link">&#127918; Ludum Dare</a>
         <a href="#" class="contact-link">&#128202; GitHub</a>
         <a href="mailto:li.kaim@northeastern.edu" class="contact-link">&#128140; li.kaim@northeastern.edu</a>
-        <a href="https://ldjam.com/events/ludum-dare/56/lumibot" class="contact-link">&#127918; itch.io / LD56</a>
       </div>
     </div>
   </div>
@@ -261,5 +326,17 @@
   <p>Designed & built by <span style="color:var(--accent2)">Kaiming Li</span> &nbsp;&#9670;&nbsp; CS & Game Development @ Northeastern University</p>
 </footer>
 
+<script>
+function toggleCard(card) {
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.project-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) {
+    card.classList.add('open');
+    card.querySelector('.expand-hint').style.display = 'none';
+  } else {
+    card.querySelector('.expand-hint').style.display = 'block';
+  }
+}
+</script>
 </body>
 </html>
